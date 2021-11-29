@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Address {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column(name = "city")
@@ -25,13 +25,13 @@ public class Address {
 	private String street;
 	
 	@Column(name = "house_number")
-	private int houseNumber;
+	private String houseNumber;
 	
 	public Address() {
 		
 	}
 	
-	public Address(String city, String postalCode, String street, int houseNumber) {
+	public Address(String city, String postalCode, String street, String houseNumber) {
 		super();
 		this.city = city;
 		this.postalCode = postalCode;
@@ -71,11 +71,11 @@ public class Address {
 		this.street = street;
 	}
 
-	public int getHouseNumber() {
+	public String getHouseNumber() {
 		return houseNumber;
 	}
 
-	public void setHouseNumber(int houseNumber) {
+	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
 	}
 	

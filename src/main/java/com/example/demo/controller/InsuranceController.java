@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Car;
-import com.example.demo.model.CarInsurance;
-import com.example.demo.repository.CarRepository;
+import com.example.demo.model.Vehicle;
+import com.example.demo.model.VehicleInsurance;
+import com.example.demo.repository.VehicleRepository;
 import com.example.demo.repository.InsuranceRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -29,39 +30,44 @@ public class InsuranceController {
 	private InsuranceRepository insuranceRepository;
 	
 	@GetMapping("/insurances")
-	public List<CarInsurance> getInsurances(
+	public List<VehicleInsurance> getInsurances(
 			@RequestParam(required=false) String type,
-			@RequestParam(required=false) Long carId) {
-		if(carId != null) {
-			return insuranceRepository.findByTypeAndCarId(type, carId);
+			@RequestParam(required=false) Long vehicleId) {
+		if(vehicleId != null) {
+			return insuranceRepository.findByTypeAndVehicleId(type, vehicleId);
 		} else {
 			return insuranceRepository.findAll();
 		}
 	}
 	
 	@PostMapping("/insurances")
-	public CarInsurance createCarInsurance(@RequestBody CarInsurance carInsurance) {
-		System.out.println("ID:" + carInsurance.getCar().getId());
-		CarInsurance newCarInsurance = insuranceRepository.save(carInsurance);
-		return newCarInsurance;
+	public VehicleInsurance createVehicleInsurance(@RequestBody VehicleInsurance vehicleInsurance) {
+		VehicleInsurance newVehicleInsurance = insuranceRepository.save(vehicleInsurance);
+		return newVehicleInsurance;
 	}
 	
 	@PutMapping("/insurances/{id}")
-	public ResponseEntity<CarInsurance> updateCarInsurance(@PathVariable Long id, @RequestBody CarInsurance carInsuranceDetails) {
-		CarInsurance carInsurance = insuranceRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Car insurance does not exist with id: " + id));
-		carInsurance.setCompanyName(carInsuranceDetails.getCompanyName());
-		carInsurance.setProposalNumber(carInsuranceDetails.getProposalNumber());
-		carInsurance.setContractNumber(carInsuranceDetails.getContractNumber());
-		carInsurance.setValidFrom(carInsuranceDetails.getValidFrom());
-		carInsurance.setValidUntil(carInsuranceDetails.getValidUntil());
-		carInsurance.setVehicleValue(carInsuranceDetails.getVehicleValue());
-		carInsurance.setDistanceDriven(carInsuranceDetails.getDistanceDriven());
-		carInsurance.setPrice(carInsuranceDetails.getPrice());
-		carInsurance.setInterval(carInsuranceDetails.getInterval());	
-		carInsurance.setNotes(carInsuranceDetails.getNotes());
-		CarInsurance updatedCarInsurance = insuranceRepository.save(carInsurance);
-		return ResponseEntity.ok(updatedCarInsurance);
+	public ResponseEntity<VehicleInsurance> updateVehicleInsurance(@PathVariable Long id, @RequestBody VehicleInsurance vehicleInsuranceDetails) {
+		VehicleInsurance vehicleInsurance = insuranceRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Vehicle insurance does not exist with id: " + id));
+		vehicleInsurance.setCompanyName(vehicleInsuranceDetails.getCompanyName());
+		vehicleInsurance.setProposalNumber(vehicleInsuranceDetails.getProposalNumber());
+		vehicleInsurance.setContractNumber(vehicleInsuranceDetails.getContractNumber());
+		vehicleInsurance.setValidFrom(vehicleInsuranceDetails.getValidFrom());
+		vehicleInsurance.setValidUntil(vehicleInsuranceDetails.getValidUntil());
+		vehicleInsurance.setVehicleValue(vehicleInsuranceDetails.getVehicleValue());
+		vehicleInsurance.setValueCoverage(vehicleInsuranceDetails.getValueCoverage());
+		vehicleInsurance.setDistanceDriven(vehicleInsuranceDetails.getDistanceDriven());
+		vehicleInsurance.setPrice(vehicleInsuranceDetails.getPrice());
+		vehicleInsurance.setInterval(vehicleInsuranceDetails.getInterval());	
+		vehicleInsurance.setNotes(vehicleInsuranceDetails.getNotes());
+		VehicleInsurance updatedVehicleInsurance = insuranceRepository.save(vehicleInsurance);
+		return ResponseEntity.ok(updatedVehicleInsurance);
 	}
 	
+	@DeleteMapping("/insurances/{id}")
+	public ResponseEntity<String> deleteInsurance(@PathVariable Long id) {
+		insuranceRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
 }

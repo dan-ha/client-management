@@ -17,11 +17,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="car_insurances")
-public class CarInsurance {
+@Table(name="vehicle_insurances")
+public class VehicleInsurance {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column(name="type")
@@ -40,10 +40,13 @@ public class CarInsurance {
 	private Date validFrom;
 	
 	@Column(name="valid_until")
-	private Date validUntil;
+	private String validUntil;
 	
 	@Column(name="vehicle_value")
 	private Float vehicleValue;
+	
+	@Column(name="value_coverage")
+	private Float valueCoverage;
 	
 	@Column(name="distance_driven")
 	private Float distanceDriven;
@@ -59,13 +62,13 @@ public class CarInsurance {
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "car_id", referencedColumnName="id")
-    private Car car; 
+    @JoinColumn(name = "vehicle_id", referencedColumnName="id")
+    private Vehicle vehicle; 
 	
-	public CarInsurance() {
+	public VehicleInsurance() {
 	} 
 	
-	public CarInsurance(String companyName, String proposalNumber, String contractNumber) {
+	public VehicleInsurance(String companyName, String proposalNumber, String contractNumber) {
 		this.companyName = companyName;
 		this.proposalNumber = proposalNumber;
 		this.contractNumber = contractNumber;
@@ -119,11 +122,11 @@ public class CarInsurance {
 		this.validFrom = validFrom;
 	}
 
-	public Date getValidUntil() {
+	public String getValidUntil() {
 		return validUntil;
 	}
 
-	public void setValidUntil(Date validUntil) {
+	public void setValidUntil(String validUntil) {
 		this.validUntil = validUntil;
 	}
 
@@ -133,6 +136,14 @@ public class CarInsurance {
 
 	public void setVehicleValue(Float vehicleValue) {
 		this.vehicleValue = vehicleValue;
+	}
+
+	public Float getValueCoverage() {
+		return valueCoverage;
+	}
+
+	public void setValueCoverage(Float valueCoverage) {
+		this.valueCoverage = valueCoverage;
 	}
 
 	public Float getDistanceDriven() {
@@ -167,12 +178,12 @@ public class CarInsurance {
 		this.notes = notes;
 	}
 
-	public Car getCar() {
-		return car;
+	public Vehicle getVehicle() {
+		return vehicle;
 	}
 
-	public void setCar(Car car) {
-		this.car = car;
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 	
 }

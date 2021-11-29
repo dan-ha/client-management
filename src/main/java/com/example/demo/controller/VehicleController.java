@@ -16,46 +16,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Car;
-import com.example.demo.model.CarInsurance;
-import com.example.demo.repository.CarRepository;
+import com.example.demo.model.Vehicle;
+import com.example.demo.model.VehicleInsurance;
+import com.example.demo.repository.VehicleRepository;
 import com.example.demo.repository.InsuranceRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
-public class CarController {
+public class VehicleController {
 	
 	@Autowired
-	private CarRepository carRepository;
+	private VehicleRepository vehicleRepository;
 	
 	@Autowired
 	private InsuranceRepository insuranceRepository;
 	
-	@GetMapping("/cars")
-	public List<Car> getCars(@RequestParam(required=false) Long ownerId) {
+	@GetMapping("/vehicles")
+	public List<Vehicle> getVehicles(@RequestParam(required=false) Long ownerId) {
 		if(ownerId != null) {
-			return carRepository.findByOwnerId(ownerId);
+			return vehicleRepository.findByOwnerId(ownerId);
 		} else {
-			return carRepository.findAll();
+			return vehicleRepository.findAll();
 		}
 	}
 	
-	@PostMapping("/cars")
-	public Car createCar(@RequestBody Car car) {
-		return carRepository.save(car);
+	@PostMapping("/vehicles")
+	public Vehicle createCar(@RequestBody Vehicle car) {
+		return vehicleRepository.save(car);
 	}
 	
-	@GetMapping("/cars/{id}")
-	public ResponseEntity<Car> getCarById(@PathVariable Long id) {
-		Car car = carRepository.findById(id)
+	@GetMapping("/vehicles/{id}")
+	public ResponseEntity<Vehicle> getCarById(@PathVariable Long id) {
+		Vehicle car = vehicleRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Car does not exist with id: " + id));
 		return ResponseEntity.ok(car);
 	}
 	
-	@PutMapping("/cars/{id}")
-	public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car carDetails) {
-		Car car = carRepository.findById(id)
+	@PutMapping("/vehicles/{id}")
+	public ResponseEntity<Vehicle> updateCar(@PathVariable Long id, @RequestBody Vehicle carDetails) {
+		Vehicle car = vehicleRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Car does not exist with id: " + id));
 		car.setBrand(carDetails.getBrand());
 		car.setModel(carDetails.getModel());
@@ -71,17 +71,17 @@ public class CarController {
 		car.setGearBox(carDetails.getGearBox());
 		car.setVin(carDetails.getVin());
 		car.setNotes(carDetails.getNotes());
-		Car updatedCar = carRepository.save(car);
+		Vehicle updatedCar = vehicleRepository.save(car);
 		return ResponseEntity.ok(updatedCar);
 	}
 	
-	@DeleteMapping("/cars/{id}")
-	public ResponseEntity<String> deleteCar(@PathVariable Long id) {
-		List<CarInsurance> insurances = insuranceRepository.findByCarId(id);
-		for(CarInsurance i : insurances) {
+	@DeleteMapping("/vehicles/{id}")
+	public ResponseEntity<String> deleteVehicle(@PathVariable Long id) {
+		List<VehicleInsurance> insurances = insuranceRepository.findByVehicleId(id);
+		for(VehicleInsurance i : insurances) {
 			insuranceRepository.delete(i);
 		}
-		carRepository.deleteById(id);
+		vehicleRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 }

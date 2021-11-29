@@ -19,11 +19,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "cars")
-public class Car {
+@Table(name = "vehicles")
+public class Vehicle {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column(name = "brand")
@@ -45,7 +45,7 @@ public class Car {
 	private String fuel;
 	
 	@Column(name = "date_made")
-	private Date dateMade;
+	private String dateMade;
 	
 	@Column(name = "technical_card_no")
 	private String technicalCardNo;
@@ -73,14 +73,14 @@ public class Car {
 	@JoinColumn(name = "owner_id", referencedColumnName="id")
 	private Client owner;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
-    private List<CarInsurance> insurances;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
+    private List<VehicleInsurance> insurances;
 	
-	public Car() {
+	public Vehicle() {
 		
 	}
 	
-	public Car(String brand, String model) {
+	public Vehicle(String brand, String model) {
 		this.brand = brand;
 		this.model = model;
 	}
@@ -141,11 +141,11 @@ public class Car {
 		this.fuel = fuel;
 	}
 	
-	public Date getDateMade() {
+	public String getDateMade() {
 		return dateMade;
 	}
 
-	public void setDateMade(Date dateMade) {
+	public void setDateMade(String dateMade) {
 		this.dateMade = dateMade;
 	}
 
@@ -213,11 +213,11 @@ public class Car {
 		this.owner = owner;
 	}
 
-	public List<CarInsurance> getInsurances() {
+	public List<VehicleInsurance> getInsurances() {
 		return insurances;
 	}
 
-	public void setInsurances(List<CarInsurance> insurances) {
+	public void setInsurances(List<VehicleInsurance> insurances) {
 		this.insurances = insurances;
 	}
 	

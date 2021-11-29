@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "clients")
 public class Client {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column(name = "title")
@@ -59,7 +59,7 @@ public class Client {
 	private Address casualAddress;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-	private List<Car> cars;
+	private List<Vehicle> vehicles;
 	
 	public Client() {
 		
@@ -169,12 +169,12 @@ public class Client {
 		this.identificationCardExpDate = identificationCardExpDate;
 	}
 
-	public List<Car> getCars() {
-		return cars;
+	public List<Vehicle> getVehicles() {
+		return vehicles;
 	}
 
-	public void setCars(List<Car> cars) {
-		this.cars = cars;
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
 	}
 	
 }

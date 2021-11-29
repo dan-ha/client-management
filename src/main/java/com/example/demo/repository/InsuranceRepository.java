@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.model.CarInsurance;
+import com.example.demo.model.VehicleInsurance;
 
-public interface InsuranceRepository extends JpaRepository<CarInsurance, Long> {
+public interface InsuranceRepository extends JpaRepository<VehicleInsurance, Long> {
 
-	List<CarInsurance> findByTypeAndCarId(String type, Long carId);
+	List<VehicleInsurance> findByTypeAndVehicleId(String type, Long vehicleId);
 	
-	List<CarInsurance> findByCarId(Long carId);
+	List<VehicleInsurance> findByVehicleId(Long vehicleId);
 	
 }

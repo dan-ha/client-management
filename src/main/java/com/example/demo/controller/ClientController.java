@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.ResourceNotFoundException;
@@ -27,6 +30,8 @@ public class ClientController {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(ClientController.class); 
 	
 	@GetMapping("/clients")
 	public List<Client> getAllClients() {
@@ -64,13 +69,4 @@ public class ClientController {
 		return ResponseEntity.ok(updatedClient);
 	}
 	
-	@DeleteMapping("/clients/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteClient(@PathVariable Long id) {
-		Client client = clientRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Client does not exist with id: " + id));
-		clientRepository.delete(client);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return ResponseEntity.ok(response);
-	}
 }
