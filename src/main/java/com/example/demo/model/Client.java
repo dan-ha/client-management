@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "clients")
@@ -60,13 +61,12 @@ public class Client {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
 	private List<Vehicle> vehicles;
-	
-	@OneToOne(optional=false)
-	@JoinColumn(name = "group_id", referencedColumnName="id", insertable=false, updatable=false)
-	private ClientGroup clientGroup;
 
 	@Column(name = "group_id")
 	private Long groupId;
+	
+	@Transient
+	private ClientGroup clientGroup;
 	
 	public Client() {
 		
@@ -192,6 +192,10 @@ public class Client {
 		this.groupId = groupId;
 	}
 	
+	public void setClientGroup(ClientGroup clientGroup) {
+		this.clientGroup = clientGroup;
+	}
+
 	public String getGroupName() {
 		return clientGroup == null ? null : clientGroup.getName();
 	}

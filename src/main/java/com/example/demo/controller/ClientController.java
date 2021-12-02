@@ -43,6 +43,12 @@ public class ClientController {
 	
 	@GetMapping("/clients")
 	public List<Client> getAllClients() {
+		List<Client> clients = clientRepository.findAllByOrderByLastNameAsc();
+		for(Client client : clients) {
+			if(client.getGroupId() != null) {
+				client.setClientGroup(clientGroupRepository.getById(client.getGroupId()));
+			}
+		}
 		return clientRepository.findAllByOrderByLastNameAsc();
 	}
 	
