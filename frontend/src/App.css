@@ -1,0 +1,40 @@
+table {
+  border-color: darkgrey !important;
+}
+
+tbody tr:hover { 
+  background: lightgray;
+  cursor: pointer; 
+}
+
+tbody .active {
+  background-color: lightyellow;
+}
+
+tbody .passive {
+  background-color: rgb(245, 245, 245);
+}
+
+dl {
+  margin-bottom: 6px !important;
+}
+
+dt {
+  white-space: nowrap; 
+  text-overflow: clip; 
+}
+dd {
+  margin-bottom: 0px !important;
+  line-break: anywhere;
+  height: auto;
+}
+
+.form-control:disabled, .form-control[readonly] {
+  background-color:white !important;
+}
+
+.end-center {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
