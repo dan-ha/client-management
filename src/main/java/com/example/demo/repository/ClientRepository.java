@@ -9,6 +9,8 @@ import com.example.demo.model.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Long>{
 
-	public List<Client> findAllByOrderByLastName();
+	public List<Client> findAllByOrderByLastNameAsc();
+	
+	public List<Client> findByGroupIdIsNullOrderByLastNameAsc();
 	
 }

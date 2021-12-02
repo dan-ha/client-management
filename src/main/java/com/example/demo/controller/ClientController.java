@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Client;
+import com.example.demo.model.ClientGroup;
+import com.example.demo.repository.ClientGroupRepository;
 import com.example.demo.repository.ClientRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -31,11 +36,19 @@ public class ClientController {
 	@Autowired
 	private ClientRepository clientRepository;
 	
+	@Autowired
+	private ClientGroupRepository clientGroupRepository;
+	
 	private final Logger LOGGER = LoggerFactory.getLogger(ClientController.class); 
 	
 	@GetMapping("/clients")
 	public List<Client> getAllClients() {
-		return clientRepository.findAllByOrderByLastName();
+		return clientRepository.findAllByOrderByLastNameAsc();
+	}
+	
+	@GetMapping("/clients/noGroup")
+	public List<Client> getClientsWithoutGroup() {
+		return clientRepository.findByGroupIdIsNullOrderByLastNameAsc();
 	}
 	
 	@PostMapping("/clients")
@@ -69,4 +82,32 @@ public class ClientController {
 		return ResponseEntity.ok(updatedClient);
 	}
 	
+	// CLIENT GROUPS
+	@GetMapping("/clientGroups")
+	public List<ClientGroup> getClientGroups() {
+		return clientGroupRepository.findAll();
+	}
+	
+	@Transactional
+	@PostMapping("/clientGroups")
+	public ClientGroup createClientGroup(@RequestBody ClientGroup clientGroup) {
+		ClientGroup newClientGroup = clientGroupRepository.save(clientGroup);
+		for(Client client : clientGroup.getClients()) {
+			Client c = clientRepository.getById(client.getId());
+			c.setGroupId(newClientGroup.getId());
+		}
+		return newClientGroup;
+	}
+	
+	@Transactional
+	@DeleteMapping("/clientGroups/{id}")
+	public ResponseEntity<String> deleteClientGroup(@PathVariable Long id) {
+		ClientGroup clientGroup = clientGroupRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Client group does not exist with id: " + id));
+		for(Client client : clientGroup.getClients()) {
+			client.setGroupId(null);
+		}
+		clientGroupRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
 }

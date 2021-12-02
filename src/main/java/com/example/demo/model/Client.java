@@ -61,6 +61,13 @@ public class Client {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
 	private List<Vehicle> vehicles;
 	
+	@OneToOne(optional=false)
+	@JoinColumn(name = "group_id", referencedColumnName="id", insertable=false, updatable=false)
+	private ClientGroup clientGroup;
+
+	@Column(name = "group_id")
+	private Long groupId;
+	
 	public Client() {
 		
 	}
@@ -176,5 +183,16 @@ public class Client {
 	public void setVehicles(List<Vehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
+
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
 	
+	public String getGroupName() {
+		return clientGroup == null ? null : clientGroup.getName();
+	}
 }
