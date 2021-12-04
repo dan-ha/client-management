@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+sqliteclient.db
+
+node_modules/

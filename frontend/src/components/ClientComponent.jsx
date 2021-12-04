@@ -90,7 +90,7 @@ function ClientComponent({ history, match }) {
     });
     // set dates
     const dateFields = ['identificationCardExpDate'];
-    dateFields.map(dateField => {
+    dateFields.forEach(dateField => {
       if(client[dateField] != null) {
         let d = new Date(client[dateField]).toISOString().slice(0, 10);
         setFieldValue(dateField, d, false);
@@ -263,7 +263,7 @@ function ClientComponent({ history, match }) {
       </div>
       <br/>
       {!isAddMode && 
-        <ListVehicleComponent history={history} match={match}/>
+        <ListVehicleComponent/>
       }
     </div>
   )

@@ -4,9 +4,10 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import VehicleService from '../services/VehicleService';
+import { useParams } from 'react-router';
 
-function InsuranceCascoComponent({match}) {
-  const { vehicleId } = match.params;
+function InsuranceCascoComponent() {
+  const { vehicleId } = useParams();
   const[isAddMode, setIsAddMode] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
   const [insurance, setInsurance] = useState({});

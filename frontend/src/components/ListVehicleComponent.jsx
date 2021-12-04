@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import VehicleService from '../services/VehicleService';
 
-function ListVehicleComponent({ history, match }) {
-
-  const { params } = match;
+function ListVehicleComponent() {
+  const history = useHistory();
+  const {clientId} = useParams();
   const [vehicles, setVehicles] = useState(null);
 
   useEffect(() => {
-    VehicleService.getVehicles(params.clientId)
+    VehicleService.getVehicles(clientId)
       .then(res => setVehicles(res.data));
   }, [])
   
   function tableRowClickHandler(vehicleId) {
-    history.push(`/client/${params.clientId}/vehicle/${vehicleId}`);
+    history.push(`/client/${clientId}/vehicle/${vehicleId}`);
   }
 
   return (
@@ -21,7 +21,7 @@ function ListVehicleComponent({ history, match }) {
       <br/>
       <h2 className="text-center">Zoznam vozidiel</h2>
       <div className="float-end">
-        <Link to={`/client/${params.clientId}/vehicle/add`} className="btn btn-md btn-success mb-2">Pridať vozidlo</Link>
+        <Link to={`/client/${clientId}/vehicle/add`} className="btn btn-md btn-success mb-2">Pridať vozidlo</Link>
       </div>
       <table className="table table-striped table-bordered">
         <thead>

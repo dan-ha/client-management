@@ -7,7 +7,7 @@ class ClientService {
   
   parseDates = (client, dateFields) => {
     let parsedClient = {...client};
-    dateFields.map(dateField => {
+    dateFields.forEach(dateField => {
       if(client[dateField] != '') {
         parsedClient[dateField] = new Date(client[dateField]);
       }

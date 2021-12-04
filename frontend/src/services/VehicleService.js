@@ -49,7 +49,7 @@ class VehicleService {
 
   parseDates = (obj, dateFields) => {
     let parsedObj = {...obj};
-    dateFields.map(dateField => {
+    dateFields.forEach(dateField => {
       if(obj[dateField] != '') {
         parsedObj[dateField] = new Date(obj[dateField]);
       }

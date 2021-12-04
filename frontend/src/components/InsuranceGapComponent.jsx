@@ -3,9 +3,10 @@ import { toast } from 'react-toastify';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import VehicleService from "../services/VehicleService";
+import { useParams } from 'react-router';
 
-function InsuranceGapComponent({match}) {
-  const { vehicleId } = match.params;
+function InsuranceGapComponent() {
+  const { vehicleId } = useParams();
 
   const [isAddMode, setIsAddMode] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);

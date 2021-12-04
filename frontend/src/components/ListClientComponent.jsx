@@ -5,8 +5,8 @@ import ClientService from "../services/ClientService";
 
 function ListClientComponent({ history }) {
 
-  const [dataAll, setDataAll] = useState([]);
-  const [listData, setListData] = useState([]);
+  const [dataAll, setDataAll] = useState();
+  const [listData, setListData] = useState();
   const [search, setSearch] = useState('');
   const [sortedBy, setSortedBy] = useState('');
   const [today] = useState(new Date(new Date().setHours(0,0,0,0)));
@@ -16,7 +16,6 @@ function ListClientComponent({ history }) {
       .then(res => {
         let list = [];
         res.data.forEach(client => {
-          console.log(client);
           let d = {
             clientId: client.id,
             vehicleId: '',
@@ -211,7 +210,7 @@ function ListClientComponent({ history }) {
           )}
           {!listData &&
             <tr>
-              <td colSpan="3" className="text-center">
+              <td colSpan="4" className="text-center">
                 <div className="spinner-border spinner-border-lg align-center"></div>
               </td>
             </tr>

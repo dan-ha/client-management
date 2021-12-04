@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react/cjs/react.development";
 import ClientService from "../services/ClientService";
 
 function ListClientGroupComponent() {

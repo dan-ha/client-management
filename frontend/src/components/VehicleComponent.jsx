@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
@@ -250,9 +249,9 @@ function VehicleComponent({ history, match }) {
       </div>
       {!isAddMode && 
         <div>
-          <InsurancePzpComponent match={match} />
-          <InsuranceCascoComponent match={match} />
-          <InsuranceGapComponent match={match} />
+          <InsurancePzpComponent />
+          <InsuranceCascoComponent />
+          <InsuranceGapComponent />
         </div>
       }
     </div>

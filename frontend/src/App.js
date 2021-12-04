@@ -2,10 +2,9 @@ import React from 'react';
 import './App.css';
 
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-import ScrollToTop from './components/ScrollToTop';
 import { Nav } from './components/Nav'
 import { ListClientComponent } from './components/ListClientComponent';
 import { ClientComponent } from './components/ClientComponent';
@@ -19,7 +18,6 @@ function App() {
     <div>        
       <ToastContainer position="top-right" autoClose={4000} hideProgressBar pauseOnFocusLoss={false} draggable={false} pauseOnHover={false}/>
       <Router >
-        {/* <ScrollToTop/> */}
         <Nav/>
         <div className="container">
           <Switch>
