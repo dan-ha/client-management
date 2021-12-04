@@ -29,12 +29,12 @@ function InsuranceCascoComponent() {
     companyName: Yup.string().required('Poisťovňa je povinná.'),
   });
 
-  function cancelEditHandler(setFieldValue) {
+  const cancelEditHandler = (setFieldValue) => {
     setFormFields(insurance, setFieldValue);
     setIsEditMode(false);
   }
 
-  function deleteInsuranceHandler(setFieldValue) {
+  const deleteInsuranceHandler = (setFieldValue) => {
     if(window.confirm("Naozaj chcete vymazať toto CASCO?")) {
       VehicleService.deleteInsurance(insurance.id)
         .then( () => {
@@ -50,7 +50,7 @@ function InsuranceCascoComponent() {
     }
   }
 
-  function onSubmit(fields, { setStatus, setSubmitting }) {
+  const onSubmit = (fields, { setStatus, setSubmitting }) => {
     setStatus();
     if(isAddMode) {
       createVehicleInsurance(vehicleId, fields, setSubmitting);
@@ -59,7 +59,7 @@ function InsuranceCascoComponent() {
     }
   }
 
-  function createVehicleInsurance(vehicleId, fields, setSubmitting) {
+  const createVehicleInsurance = (vehicleId, fields, setSubmitting) => {
     const cascoInsurance = {...fields, type: 'casco'};
     VehicleService.createInsurance(vehicleId, cascoInsurance)
       .then((res) => {
@@ -76,7 +76,7 @@ function InsuranceCascoComponent() {
       })
   }
 
-  function updateVehicleInsurance(insuranceId, fields, setSubmitting) {
+  const updateVehicleInsurance = (insuranceId, fields, setSubmitting) => {
     VehicleService.updateInsurance(insuranceId, fields)
       .then((res) => {
         setInsurance(res.data);
@@ -91,7 +91,7 @@ function InsuranceCascoComponent() {
       })
   }
 
-  function setFormFields(insurance, setFieldValue) {
+  const setFormFields = (insurance, setFieldValue) => {
     // fields
     const fields = ['companyName', 'proposalNumber', 'contractNumber','validUntil', 'vehicleValue', 'distanceDriven', 'price', 'interval', 'notes'];
     fields.forEach(field => {
@@ -223,7 +223,6 @@ function InsuranceCascoComponent() {
                     </div>
                   </Form>
                 )
-
               }
             }
           </Formik>

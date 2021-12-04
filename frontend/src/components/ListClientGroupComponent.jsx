@@ -13,7 +13,7 @@ function ListClientGroupComponent() {
       });
   })
 
-  function deleteGroupHandler(id) {  
+  const deleteGroupHandler = (id) => {  
     if(window.confirm("Naozaj chcete vymazať túto skupinu?")) {
       ClientService.deleteClientGroup(id)
         .then(() => {

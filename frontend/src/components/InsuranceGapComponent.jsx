@@ -7,7 +7,6 @@ import { useParams } from 'react-router';
 
 function InsuranceGapComponent() {
   const { vehicleId } = useParams();
-
   const [isAddMode, setIsAddMode] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -28,12 +27,12 @@ function InsuranceGapComponent() {
     companyName: Yup.string().required('Poisťovňa je povinná.')
   });
 
-  function cancelEditHandler(setFieldValue) {
+  const cancelEditHandler = (setFieldValue) => {
     setFormFields(insurance, setFieldValue);
     setIsEditMode(false);
   }
 
-  function deleteInsuranceHandler(setFieldValue) {
+  const deleteInsuranceHandler = (setFieldValue) => {
     if(window.confirm("Naozaj chcete vymazať toto GAP?")) {
       VehicleService.deleteInsurance(insurance.id)
         .then( () => {
@@ -49,7 +48,7 @@ function InsuranceGapComponent() {
     }
   }
 
-  function onSubmit(fields, { setStatus, setSubmitting }) {
+  const onSubmit = (fields, { setStatus, setSubmitting }) => {
     setStatus();
     if(isAddMode) {
       createVehicleInsurance(vehicleId, fields, setSubmitting);
@@ -58,7 +57,7 @@ function InsuranceGapComponent() {
     }
   }
 
-  function createVehicleInsurance(vehicleId, fields, setSubmitting) {
+  const createVehicleInsurance = (vehicleId, fields, setSubmitting) => {
     const gapInsurance = {...fields, type: 'gap'};
     VehicleService.createInsurance(vehicleId, gapInsurance)
       .then((res) => {
@@ -75,7 +74,7 @@ function InsuranceGapComponent() {
       })
   }
 
-  function updateVehicleInsurance(insuranceId, fields, setSubmitting) {
+  const updateVehicleInsurance = (insuranceId, fields, setSubmitting) => {
     VehicleService.updateInsurance(insuranceId, fields)
       .then((res) => {
         toast.success('Úspešne upravené GAPko');
@@ -90,7 +89,7 @@ function InsuranceGapComponent() {
       })
   }
 
-  function setFormFields(insurance, setFieldValue) {
+  const setFormFields = (insurance, setFieldValue) => {
     // fields
     const fields = ['companyName', 'proposalNumber', 'contractNumber', 'interval', 'price', 'valueCoverage', 'notes'];
     fields.forEach(field => {

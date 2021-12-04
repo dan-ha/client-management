@@ -30,11 +30,7 @@ function ClientComponent({ history, match }) {
     lastName: Yup.string().required("Priezvisko je povinné"),
   });
 
-  function editClientHandler() {
-    setIsEditMode(true);
-  }
-
-  function cancelEditHandler(setFieldValue) {
+  const cancelEditHandler = (setFieldValue) => {
     if(isAddMode) {
       history.push('/clients');
     } else {
@@ -43,7 +39,7 @@ function ClientComponent({ history, match }) {
     }
   }
 
-  function onSubmit(fields, {setStatus, setSubmitting}) {
+  const onSubmit = (fields, {setStatus, setSubmitting}) => {
     setStatus();
     if(isAddMode) {
       createClient(fields, setSubmitting);
@@ -52,7 +48,7 @@ function ClientComponent({ history, match }) {
     }
   }
 
-  function createClient(fields, setSubmitting) {
+  const createClient = (fields, setSubmitting) => {
     ClientService.createClient(fields)
       .then((res) => {
         setSubmitting(false);
@@ -67,7 +63,7 @@ function ClientComponent({ history, match }) {
       });
   }
 
-  function updateClient(clientId, fields, setSubmitting) {
+  const updateClient = (clientId, fields, setSubmitting) => {
     ClientService.updateClient(clientId, fields)
     .then((res) => {
       setSubmitting(false);
@@ -82,7 +78,7 @@ function ClientComponent({ history, match }) {
     });
   }
 
-  function setFormFields(client, setFieldValue) {
+  const setFormFields = (client, setFieldValue) => {
     const fields = ['title', 'firstName', 'lastName', 'identificationNumber', 'identificationCardNumber', 'phoneNumber', 'emailAddress'];
     fields.forEach(field => {
       let value = client[field] == null ? '' : client[field];
@@ -119,7 +115,6 @@ function ClientComponent({ history, match }) {
         <div className="card-body">
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
             {function Render({ errors, touched, isSubmitting, setFieldValue }) {
-
 
                 useEffect(() => {
                   if(!isAddMode) {
@@ -248,7 +243,7 @@ function ClientComponent({ history, match }) {
                     }
                     {!isEditMode &&
                       <div className="form-group">
-                        <button className="btn btn-primary" onClick={editClientHandler}>
+                        <button className="btn btn-primary" onClick={() => setIsEditMode(true)}>
                             Upraviť
                         </button>
                       </div>

@@ -4,16 +4,6 @@ const CLIENT_API_BASE_URL = "http://localhost:8080/api/v1/clients";
 const CLIENT_GROUP_API_BASE_URL = "http://localhost:8080/api/v1/clientGroups";
 
 class ClientService {
-  
-  parseDates = (client, dateFields) => {
-    let parsedClient = {...client};
-    dateFields.forEach(dateField => {
-      if(client[dateField] != '') {
-        parsedClient[dateField] = new Date(client[dateField]);
-      }
-    });
-    return parsedClient;
-  }
 
   getClients() {
     return axios.get(CLIENT_API_BASE_URL);
@@ -57,6 +47,16 @@ class ClientService {
 
   deleteClient(clientId) {
     return axios.delete(CLIENT_API_BASE_URL + '/' + clientId);
+  }
+
+  parseDates = (client, dateFields) => {
+    let parsedClient = {...client};
+    dateFields.forEach(dateField => {
+      if(client[dateField] != '') {
+        parsedClient[dateField] = new Date(client[dateField]);
+      }
+    });
+    return parsedClient;
   }
 
   // CLIENT GROUPS

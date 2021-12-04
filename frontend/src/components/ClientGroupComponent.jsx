@@ -28,7 +28,7 @@ function ClientGroupComponent() {
       });
   }, []);
 
-  function addClientHandler(e) {
+  const addClientHandler = (e) => {
     e.preventDefault();
     if(clients.length > 0) {
       let client = {};
@@ -46,7 +46,7 @@ function ClientGroupComponent() {
     }
   }
 
-  function createGroupHandler(e) {
+  const createGroupHandler = (e) => {
     e.preventDefault();
     let clients = clientsSelected.map(c => ({id: c.id}));
     ClientService.createClientGroup(groupName, clients)

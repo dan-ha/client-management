@@ -62,7 +62,7 @@ function ListClientComponent({ history }) {
       });
   }, []);
 
-  function setCurrentYear(dateString) {
+  const setCurrentYear = (dateString) => {
     if(dateString == null) return null;
     let d = new Date(dateString);
     d.setYear(today.getFullYear());
@@ -123,7 +123,7 @@ function ListClientComponent({ history }) {
     }
   }, [sortedBy]);
 
-  function tableRowClickHandler(clientId, vehicleId) {
+  const tableRowClickHandler = (clientId, vehicleId) => {
     if(vehicleId) {
       history.push(`/client/${clientId}/vehicle/${vehicleId}`);
     } else {
@@ -131,7 +131,7 @@ function ListClientComponent({ history }) {
     }
   }
 
-  function compareNames(a, b) {
+  const compareNames = (a, b) => {
     let nameA = a.lastName + a.firstName;
     let nameB = b.lastName + b.firstName;
     if(a.groupName !== null) {
@@ -149,11 +149,11 @@ function ListClientComponent({ history }) {
     return 0;
   }
 
-  function compareValidFromDates(a, b) {
+  const compareValidFromDates = (a, b) => {
     return a.validFrom - b.validFrom;
   }
 
-  function compareCompanyNames(a, b) {
+  const compareCompanyNames = (a, b) => {
     if (a.companyName < b.companyName) {
       return -1;
     }
@@ -162,7 +162,6 @@ function ListClientComponent({ history }) {
     }
     return 0;
   }
-
 
   return (
     <div>

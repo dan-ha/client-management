@@ -36,16 +36,16 @@ function VehicleComponent({ history, match }) {
     brand: Yup.string().required('Značka je povinná'),
   });
 
-  function clientInfoHandler() {
+  const clientInfoHandler = () => {
     history.push(`/client/${clientId}`);
   }
 
-  function printHandler() {
+  const printHandler = () => {
     const win = window.open(`/client/${clientId}/vehicle/${vehicleId}/print`, "_blank");
     win.focus();
   }
 
-  function deleteVehicleHandler() {
+  const deleteVehicleHandler = () => {
     if(window.confirm(`Naozaj chcete vymazať vozidlo ${vehicle.brand}-${vehicle.model}`)) {
       VehicleService.deleteVehicle(vehicleId)
       .then( () => {
@@ -59,11 +59,11 @@ function VehicleComponent({ history, match }) {
     }
   }
   
-  function editVehicleHandler() {
+  const editVehicleHandler = () => {
     setIsEditMode(true);
   }
 
-  function cancelEditHandler(setFieldValue) {
+  const cancelEditHandler = (setFieldValue) => {
     if(isAddMode) {
       history.push(`/client/${clientId}`);
     } else {
@@ -72,7 +72,7 @@ function VehicleComponent({ history, match }) {
     }
   }
 
-  function onSubmit(fields, { setStatus, setSubmitting }) {
+  const onSubmit = (fields, { setStatus, setSubmitting }) => {
     setStatus();
     if (isAddMode) {
       createVehicle(clientId, fields, setSubmitting);
@@ -81,7 +81,7 @@ function VehicleComponent({ history, match }) {
     }
   }
 
-  function createVehicle(clientId, fields, setSubmitting) {
+  const createVehicle = (clientId, fields, setSubmitting) => {
     VehicleService.createVehicle(clientId, fields)
       .then((res) => {
         setSubmitting(false);
@@ -95,7 +95,7 @@ function VehicleComponent({ history, match }) {
       });
   }
 
-  function updateVehicle(vehicleId, fields, setSubmitting) {
+  const updateVehicle = (vehicleId, fields, setSubmitting) => {
     VehicleService.updateVehicle(vehicleId, fields)
       .then((res) => {
         toast.success('Úspešne upravené vozidlo');
@@ -109,7 +109,7 @@ function VehicleComponent({ history, match }) {
       });
   }
 
-  function setFormFields(vehicle, setFieldValue) {
+  const setFormFields = (vehicle, setFieldValue) => {
     const fields = ['brand', 'model', 'licensePlateNumber', 'dateMade', 'volume', 'power', 'weight', 'color', 'fuel', 'type', 'gearBox', 'vin', 'notes'];
     fields.forEach(field => {
       let value = vehicle[field] == null ? '' : vehicle[field];
